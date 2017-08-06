@@ -7,7 +7,7 @@ class ListBooks extends Component {
     shelves: {
       currentlyReading: 'Currently Reading',
       wantToRead: 'Want To Read',
-      read: 'Currently Reading'
+      read: 'Read'
     }
   }
 
