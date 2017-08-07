@@ -13,7 +13,7 @@ class SearchBooks extends Component {
     this.setState({query: query.trim()},() => {
       if (this.state.query!=='') {
         this.props.searchBooks(this.state.query).then((books) => {
-          if (books) {
+          if (books && this.isMounted) {
             this.setState({books: books})
           }
         })

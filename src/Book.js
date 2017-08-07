@@ -13,11 +13,10 @@ class Book extends Component {
     return (
       <div className="book">
         <div className="book-top">
-          <div className="book-cover"
-            style={{
-              "height" : "100%", "width" : "100%",
-            backgroundImage: `url(${book.imageLinks.thumbnail})`
-            }}/>
+          <div
+            className="book-cover"
+            style={{ backgroundImage: `url(${book.imageLinks.thumbnail})` }}
+          />
           <div className="book-shelf-changer">
             <select
               id={book.id}

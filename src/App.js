@@ -19,9 +19,23 @@ class BooksApp extends React.Component {
     return BooksAPI.search(query, 20)
   }
 
+  _update_book_state = (bookId, shelf) => {
+    const books_cpy = [...this.state.books];
+    let book = books_cpy.filter(b => {return b.id === bookId})
+    if(book.length > 0){ // doing a state change with mutation
+      book[0].shelf = shelf
+    }
+    else if (shelf!=='none') {
+      let new_book = BooksAPI.get(bookId)
+      books_cpy.concat(new_book)
+    }
+    this.setState({books:books_cpy})
+  }
+
+
   updateBookShelf = (bookId, shelf) => {
     BooksAPI.update({id: bookId}, shelf)
-    BooksAPI.getAll().then((books) => (this.setState({books: books})))
+    this._update_book_state(bookId, shelf)
   }
 
   render() {
