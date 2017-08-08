@@ -4,23 +4,40 @@ import Book from './Book'
 
 class SearchBooks extends Component {
 
+  mounted = false
+
   state = {
     query: '',
     books: []
+  }
+
+  componentDidMount() {
+    this.mounted = true
+  }
+
+  componentWillUnmount() {
+    this.mounted = false
+  }
+
+  populateBookStates = (books) => {
+    return books.map(book => {
+      book.shelf = (this.props.shelfBooks[book.id])? this.props.shelfBooks[book.id].shelf : "none"
+      return book
+    })
   }
 
   updateQuery = (query) => {
     this.setState({query: query.trim()},() => {
       if (this.state.query!=='') {
         this.props.searchBooks(this.state.query).then((books) => {
-          if (books && this.isMounted) {
-            this.setState({books: books})
+          if (books && !("error" in books) && this.mounted) {
+            this.setState({books: this.populateBookStates(books)})
           }
         })
       }
     })
-
   }
+
   onUpdateBookShelf = (id,shelf) => {
     this.props.onUpdateBookShelf(id,shelf)
     this.updateQuery(this.state.query)
